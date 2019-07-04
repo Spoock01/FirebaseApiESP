@@ -1,13 +1,8 @@
 var firebase = require("firebase");
 
-var express = require('express');
-var app = express();
-
 inputEmail = 'abc@gmail.com';
 inputPassword = 'minduin';
-
 var lista = [];
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmsCvaUtFUSmIGIr2uZWl_6yQ5whAHMsQ",
@@ -25,17 +20,16 @@ firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(funct
     ref.on('value', gotData, errData);
     return;
 }).catch(function (error) {
-    // Handle Errors here.
+
     var errorCode = error.code;
     var errorMessage = error.message;
-
-    console.log(errorMessage);
+    console.log('Err code: ', errorCode);
+    console.log('Err Message: ', errorMessage);
 
 });
 
 
 var database = firebase.database();
-
 var ref =  database.ref('Rede');
 
 function gotData(data){
@@ -50,26 +44,15 @@ function gotData(data){
         for(var i = 0; i < keys.length; i++){
 
             var k = keys[i];
-            console.log('Object: ', redes[k]);
-
-            if(redes[k] !== undefined){
-                
-                lista.push(redes[k]);
-           
-                var intensidade = redes[k].Intensidade_RSSI;
-                var MAC = redes[k].MAC;
-                var nome = redes[k].Nome; 
-                console.log(intensidade, MAC, nome);
-
-            }else{
-                console.log('Undefined object.');
-            }   
+            if(redes[k] !== undefined)    
+                lista.push(redes[k]);       
+            else
+                console.log('Undefined object received.');   
         }
-
+        
     }catch(err){
-        console.log('Erro: ', err);
+        console.log('Erro no try: ', err);
     }
-    return;
 }
 
 function errData(err){
@@ -77,8 +60,11 @@ function errData(err){
 }
 
 module.exports = function(){
-    console.log('____________________________________________');
-    console.log(lista)
-    console.log('____________________________________________');
     return lista;
 }
+
+
+// var intensidade = redes[k].Intensidade_RSSI;
+// var MAC = redes[k].MAC;
+// var nome = redes[k].Nome; 
+// console.log(intensidade, MAC, nome);
