@@ -21,8 +21,8 @@ app.get("/", function(req, res, next){
 });
 
 
-app.listen(8081, function(){
-    console.log('Servidor rodando. localhost:8081/"roomName"');
+app.listen(3000, function(){
+    console.log('Servidor rodando. localhost:3000/"roomName"');
 })
 
 
