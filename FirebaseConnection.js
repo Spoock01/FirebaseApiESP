@@ -1,7 +1,7 @@
-var firebase = require("firebase");
+const firebase = require("firebase");
 
-inputEmail = 'abc@gmail.com';
-inputPassword = 'minduin';
+const inputEmail = 'abc@gmail.com';
+const inputPassword = 'minduin';
 var lista = [];
 
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(function (result) {
-    console.log("Usuário Conectado!");
+    console.log("User connected.");
     ref.on('value', gotData, errData);
     return;
 }).catch(function (error) {
