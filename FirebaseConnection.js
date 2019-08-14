@@ -1,4 +1,4 @@
-const firebase = require("firebase");
+import firebase from 'firebase';
 
 const inputEmail = 'abc@gmail.com';
 const inputPassword = 'minduin';
@@ -24,12 +24,12 @@ firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(funct
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log('Err code: ', errorCode);
-    console.log('Err Message: ', errorMessage);
+    console.log('Err Message: ', listaerrorMessage);
 
 });
 
 
-var database = firebase.database();
+const database = firebase.database();
 var ref =  database.ref('Rede');
 
 function gotData(data){
@@ -59,12 +59,8 @@ function errData(err){
     console.log('Erro: ' + err);
 }
 
-module.exports = function(){
+function getRoomList() {
     return lista;
 }
 
-
-// var intensidade = redes[k].Intensidade_RSSI;
-// var MAC = redes[k].MAC;
-// var nome = redes[k].Nome; 
-// console.log(intensidade, MAC, nome);
+export { getRoomList, database };

@@ -1,6 +1,5 @@
-const express = require('express');
-
-const getRoomList = require('./FirebaseConnection');
+import express from 'express';
+import {getRoomList, database} from './FirebaseConnection';
 
 const app = express();
 
@@ -35,7 +34,7 @@ const getFilteredRooms = roomList => {
     return null;
 }
 
-app.get("/:roomName", function(req, res, next){
+app.get("/:roomName", (req, res, next) => {
 
     const { roomName } = req.params;
     const roomList = getRoomList();
@@ -57,7 +56,7 @@ app.get("/:roomName", function(req, res, next){
     }
 });
 
-app.get("/", function(req, res, next){
+app.get("/", (req, res, next) => {
 
     // const roomList = getRoomList();
     const roomList = getFilteredRooms(getRoomList());
@@ -67,10 +66,28 @@ app.get("/", function(req, res, next){
 
 });
 
+app.post('/login/:user/:password', (req, res, next) => {
+
+    res.status(200).send("Ainda não foi feito.");
+
+
+});
+
 
 app.listen(3000, function(){
     console.log(`Server started on port 3000.`);
-})
+    writeUserData(1, "Sala1", "mac1");
+    console.log("Write");
+});
+
+
+
+function writeUserData(userId, roomName, macAddress) {
+    database.ref('Rede/' + userId).set({
+      "Nome": roomName,
+      "MAC": macAddress
+    });
+  }
 
 
 
