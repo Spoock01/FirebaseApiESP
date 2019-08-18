@@ -56,7 +56,7 @@ app.get("/:roomName", (req, res, next) => {
     }
 });
 
-app.get("/", (req, res) => {
+app.get("/room", (req, res) => {
 
     const roomList = getRoomList();
     // const roomList = getFilteredRooms(getRoomList());
