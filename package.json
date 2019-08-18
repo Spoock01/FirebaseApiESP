@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon",
-    "dev": "nodemon -w . --exec \"babel-node . --presets env\"" 
+    "dev": "nodemon -w . --exec \"babel-node . --presets env\""
   },
   "author": "",
   "license": "ISC",

@@ -17,20 +17,18 @@ firebase.initializeApp(firebaseConfig);
 
 firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(function (result) {
     console.log("User connected.");
-    ref.on('value', gotData, errData);
+    redeRef.on('value', gotData, errData);
     return;
 }).catch(function (error) {
-
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log('Err code: ', errorCode);
     console.log('Err Message: ', listaerrorMessage);
-
 });
 
 
 const database = firebase.database();
-var ref =  database.ref('Rede');
+var redeRef = database.ref('Rede');
 
 function gotData(data){
     var redes = data.val();
@@ -42,7 +40,6 @@ function gotData(data){
         var keys = Object.keys(redes);
 
         for(var i = 0; i < keys.length; i++){
-
             var k = keys[i];
             if(redes[k] !== undefined)    
                 lista.push(redes[k]);       
