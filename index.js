@@ -2,6 +2,8 @@ import express from 'express';
 import { getRegisteredList, getEspList, database } from './FirebaseConnection';
 
 const app = express();
+app.use(express.json());
+
 
 const registeredRooms = [{
 	name: 'Sala Synchro',
@@ -74,7 +76,7 @@ app.post('/login/:user/:password', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-	console.log(req.body)
+	console.log();
 
 	var status = writeUserData(req.body.roomName, req.body.mac);
 
