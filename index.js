@@ -78,7 +78,7 @@ app.post('/register', (req, res) => {
 
 	console.log();
 
-	var status = writeUserData(req.body.roomName, req.body.mac);
+	var status = writeUserData(req.body.roomName, req.body.macAddress);
 
 	res.status(200).json(status);
 });
@@ -95,18 +95,16 @@ function writeUserData(roomName, macAddress) {
 	var registeredList = getRegisteredList();
 
 	const exists = espList.find((obj) => {
-		return obj.macAddress === macAddress;
-	})
-
+		return obj.macAddress == macAddress;
+	});
 
 	if (exists === undefined){
 		return {"status": "Mac Address not found!"};
 	}else{
 
 		const isDuplicate = registeredList.find((obj) => {
-			console.log(`Comparing ${obj.macAddress} ${macAddress}`)
-			return obj.macAddress === macAddress;
-		})
+			return obj.macAddress == macAddress;
+		});
 
 		if(isDuplicate !== undefined){
 			return {"status": "Mac Address already exists!"};
