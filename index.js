@@ -56,7 +56,7 @@ app.get("/:roomName", (req, res, next) => {
     }
 });
 
-app.get("/room", (req, res) => {
+app.get("/", (req, res) => {
 
     const roomList = getRoomList();
     // const roomList = getFilteredRooms(getRoomList());
@@ -80,8 +80,9 @@ app.post('/register/:roomName/:mac', (req, res) => {
     });
 });
 
+const PORT = process.env.PORT || 3001
 
-app.listen(3001, function(){
+app.listen(PORT, function(){
     console.log(`Server started on port 3001.`);
 });
 
