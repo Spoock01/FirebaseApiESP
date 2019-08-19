@@ -76,7 +76,7 @@ app.post('/login/:user/:password', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-	var status = await writeUserData(req.body.roomName, req.body.macAddress);
+	var status = writeUserData(req.body.roomName, req.body.macAddress);
 
 	res.status(200).json(status);
 });
