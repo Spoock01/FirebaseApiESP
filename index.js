@@ -76,9 +76,7 @@ app.post('/login/:user/:password', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-	console.log();
-
-	var status = writeUserData(req.body.roomName, req.body.macAddress);
+	var status = await writeUserData(req.body.roomName, req.body.macAddress);
 
 	res.status(200).json(status);
 });
@@ -89,7 +87,7 @@ app.listen(PORT, function () {
 	console.log(`Server started on port ${PORT}.`);
 });
 
-function writeUserData(roomName, macAddress) {
+async function writeUserData(roomName, macAddress) {
 
 	var espList = getEspList();
 	var registeredList = getRegisteredList();
@@ -113,7 +111,7 @@ function writeUserData(roomName, macAddress) {
 			const ref = database.ref('Registered');
 			var newRoom = ref.push();
 	
-			newRoom.set({
+			await newRoom.set({
 				"roomName": roomName,
 				"macAddress": macAddress
 			});
