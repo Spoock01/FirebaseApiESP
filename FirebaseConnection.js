@@ -27,20 +27,8 @@ firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(funct
 	var errorCode = error.code;
 	var errorMessage = error.message;
 	console.log('Err code: ', errorCode);
-	console.log('Err Message: ', listaerrorMessage);
+	console.log('Err Message: ', errorMessage);
 });
-
-
-function readDatabase(key, list, redes) {
-
-	var objKeys = Object.keys(redes[key]);
-
-	objKeys.forEach((roomName, macAddress) => {
-		list.push(redes[key][roomName]);
-	})
-
-}
-
 
 function gotData(data) {
 	var redes = data.val();
@@ -49,7 +37,7 @@ function gotData(data) {
 
 		espList = [];
 
-		var keys = Object.keys(redes);
+		// var keys = Object.keys(redes);
 
 		readDatabase("Rede", espList, redes);
 		readDatabase("Registered", registeredList, redes);
@@ -65,17 +53,27 @@ function gotData(data) {
 	}
 }
 
-function errData(err) {
+const errData = (err) => {
 	console.log('Erro: ' + err);
 }
 
 
-function getEspList() {
+const getEspList = () => {
 	return espList;
 }
 
-function getRegisteredList() {
+const getRegisteredList = () => {
 	return registeredList;
+}
+
+const readDatabase = (key, list, redes) => {
+
+	var objKeys = Object.keys(redes[key]);
+
+	objKeys.forEach((roomName) => {
+		list.push(redes[key][roomName]);
+	})
+
 }
 
 export { getEspList, getRegisteredList, database };
