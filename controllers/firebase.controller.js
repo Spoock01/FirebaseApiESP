@@ -46,6 +46,8 @@ const registerRoute = (req, res) => {
 
 const handleUserData = async (roomName, macAddress, res) => {
 
+	macAddress = macAddress.toLowerCase()
+
 	var espList = getEspList();
 	var registeredList = getRegisteredList();
 

@@ -31,6 +31,9 @@ firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(funct
 });
 
 const gotData = (data) => {
+	espList = [];
+	registeredList = [];
+
 	var redes = data.val();
 
 	try {
@@ -38,9 +41,10 @@ const gotData = (data) => {
 		readDatabase("Rede", espList, redes);
 		readDatabase("Registered", registeredList, redes);
 
-		// console.log("EspList: ", espList);
-		// console.log("registeredList: ", registeredList);
+		console.log("EspList: ", espList);
+		console.log("registeredList: ", registeredList);
 
+		console.log("=========================================")
 	} catch (err) {
 		console.log('Erro no try... ');
 		espList = [];
