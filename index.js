@@ -1,8 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import {registerRoute, mainRoute, loginRoute,} from './controllers/firebase.controller'
 
 const app = express();
+
 app.use(express.json());
+app.use(cors());
 
 
 // const registeredRooms = [{
