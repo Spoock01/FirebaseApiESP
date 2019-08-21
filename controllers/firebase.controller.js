@@ -28,7 +28,7 @@ const mainRoute = async (req, res) => {
 	// const roomList = getFilteredRooms(getRegisteredList( getEspList));
 	// const message = `Room list.\n ${roomList}`;
 	// console.log('Room list: \n', roomList);
-	res.status(200).json({ "Rooms": roomList });
+	res.status(200).json({ "Room": roomList });
 
 }
 
@@ -49,9 +49,13 @@ const handleUserData = async (roomName, macAddress, res) => {
 	var espList = getEspList();
 	var registeredList = getRegisteredList();
 
+	console.log(espList)
+
 	const exists = espList.find((obj) => {
-		return obj.macAddress == macAddress;
+		return obj.MAC.toLowerCase() == macAddress;
 	});
+
+	console.log(`Exists ${exists}`);
 
 	if (exists === undefined){
 		res.status(404).json({
@@ -63,6 +67,8 @@ const handleUserData = async (roomName, macAddress, res) => {
 		const isDuplicate = registeredList.find((obj) => {
 			return obj.macAddress == macAddress;
 		});
+
+		console.log(`isDuplicate ${isDuplicate}`);
 
 		if(isDuplicate !== undefined){
 
