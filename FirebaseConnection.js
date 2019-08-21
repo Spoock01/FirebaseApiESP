@@ -30,14 +30,10 @@ firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(funct
 	console.log('Err Message: ', errorMessage);
 });
 
-function gotData(data) {
+const gotData = (data) => {
 	var redes = data.val();
 
 	try {
-
-		espList = [];
-
-		// var keys = Object.keys(redes);
 
 		readDatabase("Rede", espList, redes);
 		readDatabase("Registered", registeredList, redes);
@@ -45,11 +41,10 @@ function gotData(data) {
 		// console.log("EspList: ", espList);
 		// console.log("registeredList: ", registeredList);
 
-
 	} catch (err) {
 		console.log('Erro no try... ');
-		espList = []
-		registeredList = []
+		espList = [];
+		registeredList = [];
 	}
 }
 
@@ -72,7 +67,7 @@ const readDatabase = (key, list, redes) => {
 
 	objKeys.forEach((roomName) => {
 		list.push(redes[key][roomName]);
-	})
+	});
 
 }
 

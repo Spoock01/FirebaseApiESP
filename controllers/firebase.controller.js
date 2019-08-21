@@ -38,9 +38,15 @@ const loginRoute = (req, res) => {
     res.status(200).send("Ainda não foi feito.");
 }
 
-const registerRoute = (req, res) => {
+const registerRoute = async (req, res) => {
 
-    var status = writeUserData(req.body.roomName, req.body.macAddress);
+	const { roomName, macAddress } = req.body;
+
+	// console.log(roomName, macAddress);
+
+	var status = await writeUserData(roomName, macAddress);
+	
+	// console.log(status);
 	res.status(200).json(status);
 
 }
