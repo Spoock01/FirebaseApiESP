@@ -66,6 +66,7 @@ const readDatabase = (key, list, redes) => {
 	var objKeys = Object.keys(redes[key]);
 
 	objKeys.forEach((roomName) => {
+
 		list.push(redes[key][roomName]);
 	});
 

@@ -43,7 +43,7 @@ app.use(cors());
 
 app.get("/", mainRoute);
 
-app.post('/login/:user/:password', loginRoute);
+app.post('/login', loginRoute);
 
 app.post('/register', registerRoute);
 

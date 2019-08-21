@@ -23,19 +23,19 @@ import { getRegisteredList, getEspList, database } from '../FirebaseConnection';
 // 	}
 // }
 
-const mainRoute = (req, res) => {
+const mainRoute = async (req, res) => {
 
-    const roomList = getRegisteredList(getEspList);
+    const roomList = await getRegisteredList(getEspList);
 	// const roomList = getFilteredRooms(getRegisteredList( getEspList));
 	// const message = `Room list.\n ${roomList}`;
-	console.log('Room list: \n', roomList);
-	res.status(200).json({ "Room": roomList });
+	// console.log('Room list: \n', roomList);
+	res.status(201).json({ "Room": roomList });
 
 }
 
 
 const loginRoute = (req, res) => {
-    res.status(200).send("Ainda não foi feito.");
+    res.status(201).json({ "Not implemented" : "Ainda não foi feito." });
 }
 
 const registerRoute = async (req, res) => {
@@ -47,7 +47,7 @@ const registerRoute = async (req, res) => {
 	var status = await writeUserData(roomName, macAddress);
 	
 	// console.log(status);
-	res.status(200).json(status);
+	res.status(201).json(status);
 
 }
 
@@ -82,7 +82,7 @@ const writeUserData = async (roomName, macAddress) => {
 		}
 	}
 	
-	return {"status": "OK"};
+	return {"status": "Registered"};
 }
 
 export { mainRoute, loginRoute, registerRoute };
