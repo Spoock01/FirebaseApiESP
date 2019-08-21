@@ -44,14 +44,14 @@ const registerRoute = async (req, res) => {
 
 	// console.log(roomName, macAddress);
 
-	var status = await writeUserData(roomName, macAddress);
+	var status = await writeUserData(roomName, macAddress, res);
 	
-	// console.log(status);
-	res.status(201).json(status);
+/* 	// console.log(status);
+	res.status(200).json(status); */
 
 }
 
-const writeUserData = async (roomName, macAddress) => {
+const writeUserData = async (roomName, macAddress, res) => {
 
 	var espList = getEspList();
 	var registeredList = getRegisteredList();
@@ -61,7 +61,10 @@ const writeUserData = async (roomName, macAddress) => {
 	});
 
 	if (exists === undefined){
-		return {"status": "Mac Address not found!"};
+		res.status(404).json({
+			"request_status": "Mac Address not found!"
+		});
+		return;
 	}else{
 
 		const isDuplicate = registeredList.find((obj) => {
@@ -69,7 +72,12 @@ const writeUserData = async (roomName, macAddress) => {
 		});
 
 		if(isDuplicate !== undefined){
-			return {"status": "Mac Address already exists!"};
+
+			res.status(409).json({
+				"request_status": "Mac Address already exists!"
+			});
+			return;
+
 		}
 		else {
 			const ref = database.ref('Registered');
@@ -79,10 +87,13 @@ const writeUserData = async (roomName, macAddress) => {
 				"roomName": roomName,
 				"macAddress": macAddress
 			});
+
+			res.status().json({
+				"request_status": "Registered"
+			});
+			return;
 		}
 	}
-	
-	return {"status": "Registered"};
 }
 
 export { mainRoute, loginRoute, registerRoute };
