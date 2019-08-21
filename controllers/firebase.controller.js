@@ -1,6 +1,5 @@
 import { getRegisteredList, getEspList, database } from '../FirebaseConnection';
 
-
 // const roomRoute = (req, res) => {
 
 //     const { roomName } = req.params;
@@ -25,33 +24,27 @@ import { getRegisteredList, getEspList, database } from '../FirebaseConnection';
 
 const mainRoute = async (req, res) => {
 
-    const roomList = await getRegisteredList(getEspList);
+    const roomList = await getRegisteredList();
 	// const roomList = getFilteredRooms(getRegisteredList( getEspList));
 	// const message = `Room list.\n ${roomList}`;
 	// console.log('Room list: \n', roomList);
-	res.status(201).json({ "Room": roomList });
+	res.status(200).json({ "Rooms": roomList });
 
 }
 
 
 const loginRoute = (req, res) => {
-    res.status(201).json({ "Not implemented" : "Ainda não foi feito." });
+    res.status(200).json({ "request_status" : "Not implemented" });
 }
 
-const registerRoute = async (req, res) => {
+const registerRoute = (req, res) => {
 
 	const { roomName, macAddress } = req.body;
-
 	// console.log(roomName, macAddress);
-
-	var status = await writeUserData(roomName, macAddress, res);
-	
-/* 	// console.log(status);
-	res.status(200).json(status); */
-
+	handleUserData(roomName, macAddress, res);
 }
 
-const writeUserData = async (roomName, macAddress, res) => {
+const handleUserData = async (roomName, macAddress, res) => {
 
 	var espList = getEspList();
 	var registeredList = getRegisteredList();
@@ -82,16 +75,22 @@ const writeUserData = async (roomName, macAddress, res) => {
 		else {
 			const ref = database.ref('Registered');
 			var newRoom = ref.push();
-	
-			await newRoom.set({
-				"roomName": roomName,
-				"macAddress": macAddress
-			});
+			try{
+				await newRoom.set({
+					"roomName": roomName,
+					"macAddress": macAddress
+				});
 
-			res.status().json({
-				"request_status": "Registered"
-			});
-			return;
+				res.status(201).json({
+					"request_status": "Registered"
+				});
+
+				return;
+			}catch(e){
+				res.status(500).json({
+					"request_status": "An error occurred while trying to save the data."
+				});
+			}	
 		}
 	}
 }
