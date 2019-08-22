@@ -17,11 +17,11 @@ router.post('/register',
 
         const errors = validationResult(req);
 
-        if(!errors.isEmpty()){
+        if (!errors.isEmpty()) 
             res.status(400).send(errors);
-        }else{
+        else 
             next();
-        }
+        
     },
     registerRoute);
 

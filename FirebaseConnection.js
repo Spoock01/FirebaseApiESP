@@ -19,7 +19,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 var redeRef = database.ref('/');
 
-firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(function (result) {
+firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(() => {
 	console.log("User connected.");
 	redeRef.on('value', gotData, errData);
 	return;
@@ -36,20 +36,9 @@ const gotData = (data) => {
 
 	var redes = data.val();
 
-	try {
+	readDatabase("Rede", espList, redes);
+	readDatabase("Registered", registeredList, redes);
 
-		readDatabase("Rede", espList, redes);
-		readDatabase("Registered", registeredList, redes);
-
-		console.log("EspList: ", espList);
-		console.log("registeredList: ", registeredList);
-
-		console.log("=========================================")
-	} catch (err) {
-		console.log('Erro no try... ');
-		espList = [];
-		registeredList = [];
-	}
 }
 
 const errData = (err) => {
@@ -67,13 +56,18 @@ const getRegisteredList = () => {
 
 const readDatabase = (key, list, redes) => {
 
-	var objKeys = Object.keys(redes[key]);
+	try {
+		var objKeys = Object.keys(redes[key]);
 
-	objKeys.forEach((roomName) => {
+		objKeys.forEach((roomName) => {
 
-		list.push(redes[key][roomName]);
-	});
-
+			list.push(redes[key][roomName]);
+		});
+	} catch (e) {
+		console.log(`Exception while trying to read '${key}' database.`);
+		console.log(`'${key}' database started with an empty array!`);
+		list = [];
+	}
 }
 
 export { getEspList, getRegisteredList, database };
