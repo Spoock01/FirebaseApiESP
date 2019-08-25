@@ -1,17 +1,18 @@
 import firebase from 'firebase';
+import dotenv from 'dotenv';
 
-const inputEmail = 'abc@gmail.com';
-const inputPassword = 'minduin';
 var espList = [];
 var registeredList = [];
 
+dotenv.config();
+
 const firebaseConfig = {
-	apiKey: "AIzaSyBmsCvaUtFUSmIGIr2uZWl_6yQ5whAHMsQ",
-	authDomain: "sistemasembarcados20191-64dd3.firebaseapp.com",
-	databaseURL: "https://sistemasembarcados20191-64dd3.firebaseio.com",
-	projectId: "sistemasembarcados20191-64dd3",
-	storageBucket: "sistemasembarcados20191-64dd3.appspot.com",
-	messagingSenderId: "93476806039",
+	apiKey: process.env.API_KEY,
+	authDomain: process.env.AUTH_DOMAIN,
+	databaseURL: process.env.DATABASE_URL,
+	projectId: process.env.PROJECT_ID,
+	storageBucket: process.env.STORAGE_BUCKET,
+	messagingSenderId: process.env.MESSAGING_SENDER_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -19,7 +20,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 var redeRef = database.ref('/');
 
-firebase.auth().signInWithEmailAndPassword(inputEmail, inputPassword).then(() => {
+firebase.auth().signInWithEmailAndPassword(process.env.INPUT_EMAIL, process.env.INPUT_PASSWORD).then(() => {
 	console.log("User connected.");
 	redeRef.on('value', gotData, errData);
 	return;
@@ -60,7 +61,6 @@ const readDatabase = (key, list, redes) => {
 		var objKeys = Object.keys(redes[key]);
 
 		objKeys.forEach((roomName) => {
-
 			list.push(redes[key][roomName]);
 		});
 	} catch (e) {
