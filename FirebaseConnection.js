@@ -67,9 +67,18 @@ const readDatabase = (key, list, redes) => {
     objKeys.forEach(roomName => {
       list.push(redes[key][roomName]);
     });
+
+    list = list.sort((a, b) => {
+      if(a.roomName > b.roomName)
+        return 1;
+      else if(a.roomName < b.roomName)
+        return -1;
+      return 0;
+    })
   } catch (e) {
     console.log(`Exception while trying to read '${key}' database.`);
     console.log(`'${key}' database started with an empty array!`);
+    console.log(e);
     list = [];
   }
 };
